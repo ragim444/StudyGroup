@@ -7,14 +7,11 @@ namespace APP.Controllers
 {
     public class HomeController : Controller
     {
-        //
-        // GET: /Home/
+
         SGDatabaseEntities db = new SGDatabaseEntities();
 
         public ActionResult Index()
         {
-
-            //var emp =  db.Employee.ToList();
             return View();
         }
 
@@ -39,10 +36,10 @@ namespace APP.Controllers
             var tch = db.Teacher.ToList();
             return View(tch);
         }
-       
+
         public ActionResult DeleteEmployee(int id)
         {
-            var d = db.Employee.Where(item => item.Id == id).FirstOrDefault();
+            var d = db.Employee.FirstOrDefault(item => item.Id == id);
 
             return View(d);
         }

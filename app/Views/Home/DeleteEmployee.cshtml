@@ -9,31 +9,25 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>DeleteEmployee</title>
+    <title>Удаление сотрудника</title>
 </head>
 <body>
-    <h3>Are you sure you want to delete this?</h3>
-    <fieldset>
-        <legend>Employee</legend>
+    <h3>Вы действительно хотите удалить этого сотрудника?</h3>
+   
+        <legend><b>Сотрудник</b></legend>
     
         <div class="display-label">
-             @Html.DisplayNameFor(model => model.FIO)
+        ФИО:  @Html.DisplayFor(model => model.FIO)
         </div>
-        <div class="display-field">
-            @Html.DisplayFor(model => model.FIO)
-        </div>
-    
+       
         <div class="display-label">
-             @Html.DisplayNameFor(model => model.OrganizationId)
+             Организация:    @Html.DisplayFor(model => model.Organization.Title)
         </div>
-        <div class="display-field">
-            @Html.DisplayFor(model => model.OrganizationId)
-        </div>
-    </fieldset>
+      
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
         <p>
-            <input type="submit" value="Delete" /> |
+            <input type="submit" value="Удалить" /> |
             @Html.ActionLink("Назад", "Index")
         </p>
     }
