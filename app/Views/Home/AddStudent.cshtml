@@ -1,0 +1,34 @@
+﻿@model  APP.Models.StudyGroup
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AddStudent</title>
+</head>
+<body>
+    <b>Учебная группа:  </b>@Model.Title
+    <br>
+    <b>Преподаватель:   </b>@Model.Teacher.FIO
+    <br>
+    <b>Организация:</b>
+    <br>
+    @using (Html.BeginForm("AddStudent", "Home", FormMethod.Post, new { id = "TheForm", Model }))
+    {
+        @Html.DropDownList("OrgId", (SelectList)ViewData["Organization"], "Выберите организацию", new { onchange = "document.getElementById('TheForm').submit();" })
+        
+        if (ViewData["Employee"] != null)
+        {
+        @Html.DropDownList("EmployeeId", ViewData["Employee"] as SelectList, "Выберите сотрудника")<br>
+        }
+            
+        <input id="Submit1" type="submit" value="Добавить студента в учебную группу" />
+    }
+    @Html.ActionLink("Назад", "EditStudyGroup", new { id = Model.Id })
+</body>
+</html>

@@ -1,0 +1,394 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SGDatabaseModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="SGDatabaseModelStoreContainer">
+          <EntitySet Name="Course" EntityType="SGDatabaseModel.Store.Course" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Employee" EntityType="SGDatabaseModel.Store.Employee" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="EmployeeStudy" EntityType="SGDatabaseModel.Store.EmployeeStudy" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Organization" EntityType="SGDatabaseModel.Store.Organization" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="StudyGroup" EntityType="SGDatabaseModel.Store.StudyGroup" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Teacher" EntityType="SGDatabaseModel.Store.Teacher" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Course_StudyGroup" Association="SGDatabaseModel.Store.FK_Course_StudyGroup">
+            <End Role="StudyGroup" EntitySet="StudyGroup" />
+            <End Role="Course" EntitySet="Course" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Organization" Association="SGDatabaseModel.Store.FK_Employee_Organization">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeStudy_Employee" Association="SGDatabaseModel.Store.FK_EmployeeStudy_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="EmployeeStudy" EntitySet="EmployeeStudy" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeStudy_StudyGroup" Association="SGDatabaseModel.Store.FK_EmployeeStudy_StudyGroup">
+            <End Role="StudyGroup" EntitySet="StudyGroup" />
+            <End Role="EmployeeStudy" EntitySet="EmployeeStudy" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Organization_Teacher" Association="SGDatabaseModel.Store.FK_Organization_Teacher">
+            <End Role="Teacher" EntitySet="Teacher" />
+            <End Role="Organization" EntitySet="Organization" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudyGroup_Teacher" Association="SGDatabaseModel.Store.FK_StudyGroup_Teacher">
+            <End Role="Teacher" EntitySet="Teacher" />
+            <End Role="StudyGroup" EntitySet="StudyGroup" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="StudyGroupId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="FIO" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="OrganizationId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmployeeStudy">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+            <PropertyRef Name="StudyGroupId" />
+          </Key>
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+          <Property Name="StudyGroupId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Organization">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="INN" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="TeacherId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StudyGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="TeacherId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="FIO" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Course_StudyGroup">
+          <End Role="StudyGroup" Type="SGDatabaseModel.Store.StudyGroup" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Course" Type="SGDatabaseModel.Store.Course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudyGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Course">
+              <PropertyRef Name="StudyGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Organization">
+          <End Role="Organization" Type="SGDatabaseModel.Store.Organization" Multiplicity="1" />
+          <End Role="Employee" Type="SGDatabaseModel.Store.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="OrganizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeStudy_Employee">
+          <End Role="Employee" Type="SGDatabaseModel.Store.Employee" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EmployeeStudy" Type="SGDatabaseModel.Store.EmployeeStudy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeStudy">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeStudy_StudyGroup">
+          <End Role="StudyGroup" Type="SGDatabaseModel.Store.StudyGroup" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EmployeeStudy" Type="SGDatabaseModel.Store.EmployeeStudy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudyGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeStudy">
+              <PropertyRef Name="StudyGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Organization_Teacher">
+          <End Role="Teacher" Type="SGDatabaseModel.Store.Teacher" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Organization" Type="SGDatabaseModel.Store.Organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Organization">
+              <PropertyRef Name="TeacherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudyGroup_Teacher">
+          <End Role="Teacher" Type="SGDatabaseModel.Store.Teacher" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="StudyGroup" Type="SGDatabaseModel.Store.StudyGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StudyGroup">
+              <PropertyRef Name="TeacherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SGDatabaseModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="SGDatabaseEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Course" EntityType="SGDatabaseModel.Course" />
+          <EntitySet Name="Employee" EntityType="SGDatabaseModel.Employee" />
+          <EntitySet Name="Organization" EntityType="SGDatabaseModel.Organization" />
+          <EntitySet Name="StudyGroup" EntityType="SGDatabaseModel.StudyGroup" />
+          <EntitySet Name="Teacher" EntityType="SGDatabaseModel.Teacher" />
+          <AssociationSet Name="FK_Course_StudyGroup" Association="SGDatabaseModel.FK_Course_StudyGroup">
+            <End Role="StudyGroup" EntitySet="StudyGroup" />
+            <End Role="Course" EntitySet="Course" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Organization" Association="SGDatabaseModel.FK_Employee_Organization">
+            <End Role="Organization" EntitySet="Organization" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Organization_Teacher" Association="SGDatabaseModel.FK_Organization_Teacher">
+            <End Role="Teacher" EntitySet="Teacher" />
+            <End Role="Organization" EntitySet="Organization" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudyGroup_Teacher" Association="SGDatabaseModel.FK_StudyGroup_Teacher">
+            <End Role="Teacher" EntitySet="Teacher" />
+            <End Role="StudyGroup" EntitySet="StudyGroup" />
+          </AssociationSet>
+          <AssociationSet Name="EmployeeStudy" Association="SGDatabaseModel.EmployeeStudy">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="StudyGroup" EntitySet="StudyGroup" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="StudyGroupId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="StudyGroup" Relationship="SGDatabaseModel.FK_Course_StudyGroup" FromRole="Course" ToRole="StudyGroup" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="FIO" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="OrganizationId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Organization" Relationship="SGDatabaseModel.FK_Employee_Organization" FromRole="Employee" ToRole="Organization" />
+          <NavigationProperty Name="StudyGroup" Relationship="SGDatabaseModel.EmployeeStudy" FromRole="Employee" ToRole="StudyGroup" />
+        </EntityType>
+        <EntityType Name="Organization">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="INN" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="TeacherId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="SGDatabaseModel.FK_Employee_Organization" FromRole="Organization" ToRole="Employee" />
+          <NavigationProperty Name="Teacher" Relationship="SGDatabaseModel.FK_Organization_Teacher" FromRole="Organization" ToRole="Teacher" />
+        </EntityType>
+        <EntityType Name="StudyGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="TeacherId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Course" Relationship="SGDatabaseModel.FK_Course_StudyGroup" FromRole="StudyGroup" ToRole="Course" />
+          <NavigationProperty Name="Teacher" Relationship="SGDatabaseModel.FK_StudyGroup_Teacher" FromRole="StudyGroup" ToRole="Teacher" />
+          <NavigationProperty Name="Employee" Relationship="SGDatabaseModel.EmployeeStudy" FromRole="StudyGroup" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="FIO" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Organization" Relationship="SGDatabaseModel.FK_Organization_Teacher" FromRole="Teacher" ToRole="Organization" />
+          <NavigationProperty Name="StudyGroup" Relationship="SGDatabaseModel.FK_StudyGroup_Teacher" FromRole="Teacher" ToRole="StudyGroup" />
+        </EntityType>
+        <Association Name="FK_Course_StudyGroup">
+          <End Role="StudyGroup" Type="SGDatabaseModel.StudyGroup" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Course" Type="SGDatabaseModel.Course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudyGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Course">
+              <PropertyRef Name="StudyGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Organization">
+          <End Role="Organization" Type="SGDatabaseModel.Organization" Multiplicity="1" />
+          <End Role="Employee" Type="SGDatabaseModel.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="OrganizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Organization_Teacher">
+          <End Role="Teacher" Type="SGDatabaseModel.Teacher" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Organization" Type="SGDatabaseModel.Organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Organization">
+              <PropertyRef Name="TeacherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudyGroup_Teacher">
+          <End Role="Teacher" Type="SGDatabaseModel.Teacher" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="StudyGroup" Type="SGDatabaseModel.StudyGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StudyGroup">
+              <PropertyRef Name="TeacherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EmployeeStudy">
+          <End Role="Employee" Type="SGDatabaseModel.Employee" Multiplicity="*" />
+          <End Role="StudyGroup" Type="SGDatabaseModel.StudyGroup" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SGDatabaseModelStoreContainer" CdmEntityContainer="SGDatabaseEntities">
+          <EntitySetMapping Name="Course">
+            <EntityTypeMapping TypeName="SGDatabaseModel.Course">
+              <MappingFragment StoreEntitySet="Course">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="StudyGroupId" ColumnName="StudyGroupId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employee">
+            <EntityTypeMapping TypeName="SGDatabaseModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FIO" ColumnName="FIO" />
+                <ScalarProperty Name="OrganizationId" ColumnName="OrganizationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Organization">
+            <EntityTypeMapping TypeName="SGDatabaseModel.Organization">
+              <MappingFragment StoreEntitySet="Organization">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="INN" ColumnName="INN" />
+                <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudyGroup">
+            <EntityTypeMapping TypeName="SGDatabaseModel.StudyGroup">
+              <MappingFragment StoreEntitySet="StudyGroup">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teacher">
+            <EntityTypeMapping TypeName="SGDatabaseModel.Teacher">
+              <MappingFragment StoreEntitySet="Teacher">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FIO" ColumnName="FIO" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="EmployeeStudy" TypeName="SGDatabaseModel.EmployeeStudy" StoreEntitySet="EmployeeStudy">
+            <EndProperty Name="Employee">
+              <ScalarProperty Name="Id" ColumnName="EmployeeId" />
+            </EndProperty>
+            <EndProperty Name="StudyGroup">
+              <ScalarProperty Name="Id" ColumnName="StudyGroupId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,48 @@
+﻿@model IEnumerable<APP.Models.Employee>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Employee</title>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Создать нового сотрудника", "Create")
+    </p>
+    <table border="1">
+        <tr>
+            <th>
+               ФИО
+            </th>
+            <th>
+                Организация
+            </th>
+        
+        </tr>
+    
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FIO)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.Organization.Title)
+            </td>
+           <td>
+               @Html.ActionLink("Удалить сотрудника", "DeleteEmployee",  new {id = item.Id })
+           </td> 
+        </tr>
+    }
+    
+    </table>
+    <br>
+ @Html.ActionLink("На главную", "index") 
+</body>
+</html>

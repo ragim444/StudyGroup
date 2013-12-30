@@ -1,0 +1,40 @@
+﻿@model IEnumerable<APP.Models.StudyGroup>
+
+@{
+    ViewBag.Title = "Учебные группы";
+}
+
+<h2>Учебные группы</h2>
+
+<p>
+    @Html.ActionLink("Создать новую группу", "CreateGroup")
+</p>
+<table border="1">
+    <tr>
+        <th>
+          Наименование группы       |
+        </th>
+        <th>
+            Количество студентов
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Employee.Count) 
+        </td>
+        <td>
+           ->          @Html.ActionLink("Редактировать", "EditStudyGroup", new { id=item.Id })     <-
+           
+        </td>
+    </tr>
+}
+   
+</table>
+<br>
+ @Html.ActionLink("На главную", "index") 

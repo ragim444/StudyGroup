@@ -1,0 +1,41 @@
+﻿@model IEnumerable<APP.Models.Teacher>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Teacher</title>
+</head>
+<body>
+ 
+    <table>
+        <tr>
+            <th>
+              ФИО
+            </th>
+            <th>
+            Электронная почта
+            </th>
+            <th></th>
+        </tr>
+    
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FIO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            
+        </tr>
+    }
+    
+    </table>
+</body>
+</html>

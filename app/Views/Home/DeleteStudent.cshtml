@@ -1,0 +1,35 @@
+﻿@model APP.Models.Employee
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Удаление студента из учебной группы</title>
+</head>
+<body>
+    <h3>Вы действительно хотите удалить студента из группы?</h3>
+    
+        <div class="display-field">
+            @Html.DisplayFor(model => model.FIO)
+        </div>
+    
+        
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Organization.Title)
+        </div>
+    
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+        <p>
+            <input type="submit" value="Удалить" /> |
+            @Html.ActionLink("Назад", "StudyGroup")
+        </p>
+    }
+
+</body>
+</html>

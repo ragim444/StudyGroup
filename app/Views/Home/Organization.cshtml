@@ -1,0 +1,51 @@
+﻿@model IEnumerable<APP.Models.Organization>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Organization</title>
+</head>
+<body>
+  
+    <table border="1">
+        <tr>
+            <th>
+             Наименование 
+            </th>
+            <th>
+                ИНН
+            </th>
+            <th>
+                Преподаватель
+            </th>
+       
+        </tr>
+    
+    @foreach (var item in Model)
+    {
+     
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                <p>      </p>  @Html.DisplayFor(modelItem => item.INN)
+            </td>
+            <td>
+                <p>      </p>  @Html.DisplayFor(modelItem => item.Teacher.FIO )
+            </td>
+           
+        </tr>
+    }
+    
+    </table>
+    <br>
+ @Html.ActionLink("На главную", "index") 
+</body>
+</html>

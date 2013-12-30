@@ -1,0 +1,48 @@
+﻿@model  APP.Models.StudyGroup
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AddStudent</title>
+</head>
+<body>
+    
+    <b>Учебная группа:</b>
+    <br>
+    @Model.Title
+    <br>
+    <b>Преподаватель:</b> 
+     <br>
+    @Model.Teacher.FIO
+   
+
+    <br>
+<b>    Организация:</b>
+    <br>
+
+         @Html.DropDownList("Org", (List<SelectListItem>)ViewBag.Organization)
+    
+    @*@foreach (var item in Model)
+    {
+        <tr>
+            <td></td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Teacher.FIO)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }*@
+
+
+</body>
+</html>

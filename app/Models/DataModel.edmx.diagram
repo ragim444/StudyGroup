@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="841851f7bf4448c4b2271852ca424c91" Name="Diagram1">
+        <EntityTypeShape EntityType="SGDatabaseModel.Course" Width="1.5" PointX="0.625" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="SGDatabaseModel.Employee" Width="1.5" PointX="8.5" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SGDatabaseModel.Organization" Width="1.5" PointX="10.375" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SGDatabaseModel.StudyGroup" Width="1.5" PointX="4.875" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SGDatabaseModel.Teacher" Width="1.5" PointX="4.625" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="SGDatabaseModel.FK_Course_StudyGroup" ManuallyRouted="false" />
+        <AssociationConnector Association="SGDatabaseModel.FK_Employee_Organization" ManuallyRouted="false" />
+        <AssociationConnector Association="SGDatabaseModel.FK_Organization_Teacher" ManuallyRouted="false" />
+        <AssociationConnector Association="SGDatabaseModel.FK_StudyGroup_Teacher" ManuallyRouted="false" />
+        <AssociationConnector Association="SGDatabaseModel.EmployeeStudy" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
