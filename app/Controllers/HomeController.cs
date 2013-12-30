@@ -50,18 +50,12 @@ namespace APP.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
-        //
-        // GET: /Home/Create
-
+        
         public ActionResult CreateEmployee()
         {
             ViewBag.List = new SelectList(db.Organization, "Id", "Title");
             return View();
         }
-
-        //
-        // POST: /Home/Create
 
         [HttpPost]
         public ActionResult CreateEmployee(Employee employee, int list = 0)
@@ -82,17 +76,13 @@ namespace APP.Controllers
                 return View();
             }
         }
-
-
+        
         public ActionResult CreateGroup()
         {
             ViewBag.List = new SelectList(db.Teacher, "Id", "FIO");
-            
+
             return View();
         }
-
-        //
-        // POST: /Home/Create
 
         [HttpPost]
         public ActionResult CreateGroup(StudyGroup studygroup, int list = 0)
@@ -116,12 +106,7 @@ namespace APP.Controllers
                 return View();
             }
         }
-
-
-
-        //
-        // GET: /Home/Edit/5
-
+        
         public ActionResult EditStudyGroup(int id)
         {
             var d = db.StudyGroup
@@ -132,11 +117,7 @@ namespace APP.Controllers
             var esg = db.StudyGroup;
             return View(esg.SingleOrDefault(sg => sg.Id == id));
         }
-
-
-        //
-        // POST: /Home/Edit/5
-
+        
         [HttpPost]
         public ActionResult EditStudyGroup(int id, StudyGroup obj)
         {
@@ -156,8 +137,7 @@ namespace APP.Controllers
 
         public ActionResult DeleteStudent(int idSt, int idGr)
         {
-            var d = db.Employee.Where(item => item.Id == idSt).FirstOrDefault();
-
+            var d = db.Employee.FirstOrDefault(item => item.Id == idSt);
 
             return View(d);
         }
@@ -180,11 +160,10 @@ namespace APP.Controllers
             }
             return RedirectToAction("EditStudyGroup", idGr);
         }
-
-
+        
         public ActionResult AddStudent(int id)
         {
-            var d = db.StudyGroup.Where(sg => sg.Id == id).FirstOrDefault();
+            var d = db.StudyGroup.FirstOrDefault(sg => sg.Id == id);
             LoadOrganization("0", id);
 
             return View(d);
@@ -213,17 +192,14 @@ namespace APP.Controllers
                 int idSt = Convert.ToInt32(empId);
                 if (empId != null & Convert.ToInt32(organization) == orgEmp)
                 {
-
-                    Employee emp = (from e in db.Employee
-                                    where e.Id == idSt
-                                    select e).FirstOrDefault<Employee>();
-
+                    var emp = (from e in db.Employee
+                               where e.Id == idSt
+                               select e).FirstOrDefault<Employee>();
                     var sg = db.StudyGroup.FirstOrDefault(g => g.Id == id);
-
                     emp.StudyGroup.Add(sg);
                     db.SaveChanges();
-                    return RedirectToAction("EditStudyGroup", studygroup);
 
+                    return RedirectToAction("EditStudyGroup", studygroup);
                 }
             }
             catch (Exception)
@@ -236,12 +212,9 @@ namespace APP.Controllers
         public void LoadOrganization(string selOrg, int id)
         {
 
-            var teacher = db.StudyGroup.Include("Teacher").Where(stg => stg.Id == id).FirstOrDefault();
-
+            var teacher = db.StudyGroup.Include("Teacher").FirstOrDefault(stg => stg.Id == id);
             var query = db.Organization.Where(x => x.TeacherId == teacher.TeacherId).Select(c => new { c.Id, c.Title });
-
             ViewData["Organization"] = new SelectList(query.AsEnumerable(), "Id", "Title", selOrg);
-
         }
 
         public void LoadEmployee(int id, int stdgrpId)
@@ -251,7 +224,6 @@ namespace APP.Controllers
 
             ViewData["Employee"] = new SelectList(query1.AsEnumerable(), "Id", "FIO", 3);
         }
-
 
         //Немного отрефакторил костыль, что был в прошлой версии, через использование Except
         public IQueryable<Employee> EmployeeNotInGroup(int idGr)
