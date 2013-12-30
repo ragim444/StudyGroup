@@ -54,8 +54,9 @@ namespace APP.Controllers
         //
         // GET: /Home/Create
 
-        public ActionResult Create()
+        public ActionResult CreateEmployee()
         {
+            ViewBag.List = new SelectList(db.Organization, "Id", "Title");
             return View();
         }
 
@@ -63,13 +64,13 @@ namespace APP.Controllers
         // POST: /Home/Create
 
         [HttpPost]
-        public ActionResult Create(Employee employee)
+        public ActionResult CreateEmployee(Employee employee, int list = 0)
         {
             try
             {
                 var empTable = new Employee();
                 empTable.FIO = employee.FIO;
-                empTable.OrganizationId = employee.OrganizationId;
+                empTable.OrganizationId = list;
 
                 db.Employee.Add(empTable);
                 db.SaveChanges();
@@ -82,31 +83,11 @@ namespace APP.Controllers
             }
         }
 
-        //
-        // GET: /Home/Create
 
         public ActionResult CreateGroup()
         {
-
-
-
-
-            //var myList = new List<SelectListItem>();
-
-            //var list = db.Teacher.ToList();
-
-            //var items = from g in list
-            //            select new SelectListItem
-            //                {
-            //                    Value = g.Id.ToString(),
-            //                    Text = g.FIO
-            //                };
-            //foreach (var item in items)
-            //    myList.Add(item);
-
-
             ViewBag.List = new SelectList(db.Teacher, "Id", "FIO");
-
+            
             return View();
         }
 
@@ -245,7 +226,7 @@ namespace APP.Controllers
 
                 }
             }
-            catch
+            catch (Exception)
             {
 
             }
@@ -265,8 +246,8 @@ namespace APP.Controllers
 
         public void LoadEmployee(int id, int stdgrpId)
         {
-            var EmplList = EmployeeNotInGroup(stdgrpId);
-            var query1 = EmplList.Where(w => w.OrganizationId == id).Select(c => new { c.Id, c.FIO });
+            var emplList = EmployeeNotInGroup(stdgrpId);
+            var query1 = emplList.Where(w => w.OrganizationId == id).Select(c => new { c.Id, c.FIO });
 
             ViewData["Employee"] = new SelectList(query1.AsEnumerable(), "Id", "FIO", 3);
         }
@@ -276,14 +257,9 @@ namespace APP.Controllers
         public IQueryable<Employee> EmployeeNotInGroup(int idGr)
         {
             var d = db.StudyGroup
-            .Include("Employee")
-            .Where(b => b.Id == idGr).ToList()
-            .FirstOrDefault();
-
-            var students = d.Employee.ToList();
+                .Include("Employee").FirstOrDefault(b => b.Id == idGr).Employee.ToList();
             var employee = db.Employee.ToList();
-
-            var notSt = employee.AsQueryable().Except(students);
+            var notSt = employee.AsQueryable().Except(d);
 
             return notSt;
         }
