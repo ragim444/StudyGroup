@@ -21,7 +21,7 @@
         @Html.ValidationSummary(true)
     
         <fieldset>
-            <legend>Employee</legend>
+            <legend>Сотрудник</legend>
     
             <div class="editor-label">
               Введите ФИО:
@@ -32,21 +32,21 @@
             </div>
     
             <div class="editor-label">
-             Введите номер организации:
+             Выберите  организацию:
             </div>
             <div>
-                @Html.EditorFor(model => model.OrganizationId)
-                @Html.ValidationMessageFor(model => model.OrganizationId)
+                @Html.DropDownList("List", String.Empty)
+               
             </div>
     
             <p>
-                <input type="submit" value="Create" />
+                <input type="submit" value="Создать" />
             </p>
         </fieldset>
     }
     
     <div>
-        @Html.ActionLink("Back to List", "Employee")
+        @Html.ActionLink("Назад", "Employee")
     </div>
 </body>
 </html>
