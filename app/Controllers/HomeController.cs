@@ -174,14 +174,13 @@ namespace APP.Controllers
         [AcceptVerbs("POST")]
         public ActionResult AddStudent(int id, StudyGroup studygroup)
         {
-            string empId;
             var d = db.StudyGroup.FirstOrDefault(sg => sg.Id == id);
             var organization = Request["OrgId"];
             LoadOrganization(organization, id);
             try
             {
                 LoadEmployee(Convert.ToInt32(organization), studygroup.Id);
-                empId = Request["EmployeeId"];
+                string empId = Request["EmployeeId"];
                 int orgEmp = 0;
                 if (empId != null)
                 {
