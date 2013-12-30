@@ -129,7 +129,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -274,7 +273,6 @@
     <Content Include="Views\Home\Create.cshtml" />
     <Content Include="Views\Home\Organization.cshtml" />
     <Content Include="Views\Home\Teacher.cshtml" />
-    <Content Include="Views\Group\CreateGroup.cshtml" />
     <Content Include="Views\Home\StudyGroup.cshtml" />
     <Content Include="Views\Home\CreateGroup.cshtml" />
     <Content Include="Views\Home\EditStudyGroup.cshtml" />

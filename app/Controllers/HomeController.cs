@@ -7,8 +7,7 @@ namespace APP.Controllers
 {
     public class HomeController : Controller
     {
-
-        SGDatabaseEntities db = new SGDatabaseEntities();
+        readonly SGDatabaseEntities db = new SGDatabaseEntities();
 
         public ActionResult Index()
         {
@@ -68,7 +67,7 @@ namespace APP.Controllers
         {
             try
             {
-                Employee empTable = new Employee();
+                var empTable = new Employee();
                 empTable.FIO = employee.FIO;
                 empTable.OrganizationId = employee.OrganizationId;
 
@@ -115,15 +114,15 @@ namespace APP.Controllers
         // POST: /Home/Create
 
         [HttpPost]
-        public ActionResult CreateGroup(StudyGroup studygroup, int List = 0)
+        public ActionResult CreateGroup(StudyGroup studygroup, int list = 0)
         {
             try
             {
-                if (studygroup.Title != null & List != 0)
+                if (studygroup.Title != null & list != 0)
                 {
-                    StudyGroup sgTable = new StudyGroup();
+                    var sgTable = new StudyGroup();
                     sgTable.Title = studygroup.Title;
-                    sgTable.TeacherId = List;
+                    sgTable.TeacherId = list;
 
                     db.StudyGroup.Add(sgTable);
                     db.SaveChanges();
@@ -161,11 +160,14 @@ namespace APP.Controllers
         public ActionResult EditStudyGroup(int id, StudyGroup obj)
         {
             var esg = db.StudyGroup;
-            StudyGroup old = esg.SingleOrDefault(sg => sg.Id == id);
-            old.Title = obj.Title;
-            db.SaveChanges();
-            return RedirectToAction("StudyGroup");
-
+            if (obj.Title != null)
+            {
+                StudyGroup old = esg.SingleOrDefault(sg => sg.Id == id);
+                old.Title = obj.Title;
+                db.SaveChanges();
+                return RedirectToAction("StudyGroup");
+            }
+            return RedirectToAction("EditStudyGroup", id);
 
         }
 
@@ -186,7 +188,7 @@ namespace APP.Controllers
                             where e.Id == idSt
                             select e).FirstOrDefault<Employee>();
 
-            StudyGroup sg = emp.StudyGroup.Where(g => g.Id == idGr).FirstOrDefault<StudyGroup>();
+            var sg = emp.StudyGroup.Where(g => g.Id == idGr).FirstOrDefault<StudyGroup>();
 
             emp.StudyGroup.Remove(sg);
             db.SaveChanges();
