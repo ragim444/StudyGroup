@@ -197,7 +197,7 @@ namespace APP.Controllers
 
                 return RedirectToAction("EditStudyGroup", sg);
             }
-            return RedirectToAction("EditStudyGroup",idGr );
+            return RedirectToAction("EditStudyGroup", idGr);
         }
 
 
@@ -226,8 +226,8 @@ namespace APP.Controllers
                 if (empId != null)
                 {
                     int eId = Convert.ToInt32(empId);
-                    var _emp = db.Employee.Where(x => x.Id == eId).FirstOrDefault();
-                    orgEmp = _emp.OrganizationId;
+                    var emp = db.Employee.FirstOrDefault(x => x.Id == eId);
+                    orgEmp = emp.OrganizationId;
                 }
                 int idSt = Convert.ToInt32(empId);
                 if (empId != null & Convert.ToInt32(organization) == orgEmp)
@@ -237,7 +237,7 @@ namespace APP.Controllers
                                     where e.Id == idSt
                                     select e).FirstOrDefault<Employee>();
 
-                    StudyGroup sg = db.StudyGroup.Where(g => g.Id == id).FirstOrDefault<StudyGroup>();
+                    var sg = db.StudyGroup.FirstOrDefault(g => g.Id == id);
 
                     emp.StudyGroup.Add(sg);
                     db.SaveChanges();
