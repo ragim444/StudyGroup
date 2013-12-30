@@ -163,7 +163,7 @@ namespace APP.Controllers
             if (obj.Title != null)
             {
                 StudyGroup old = esg.SingleOrDefault(sg => sg.Id == id);
-                old.Title = obj.Title;
+                if (old != null) old.Title = obj.Title;
                 db.SaveChanges();
                 return RedirectToAction("StudyGroup");
             }
@@ -188,12 +188,16 @@ namespace APP.Controllers
                             where e.Id == idSt
                             select e).FirstOrDefault<Employee>();
 
-            var sg = emp.StudyGroup.Where(g => g.Id == idGr).FirstOrDefault<StudyGroup>();
+            if (emp != null)
+            {
+                var sg = emp.StudyGroup.FirstOrDefault(g => g.Id == idGr);
 
-            emp.StudyGroup.Remove(sg);
-            db.SaveChanges();
+                emp.StudyGroup.Remove(sg);
+                db.SaveChanges();
 
-            return RedirectToAction("EditStudyGroup", sg);
+                return RedirectToAction("EditStudyGroup", sg);
+            }
+            return RedirectToAction("EditStudyGroup",idGr );
         }
 
 
@@ -211,12 +215,12 @@ namespace APP.Controllers
         public ActionResult AddStudent(int id, StudyGroup studygroup)
         {
             string empId;
-            var d = db.StudyGroup.Where(sg => sg.Id == id).FirstOrDefault();
-            var Organization = Request["OrgId"];
-            LoadOrganization(Organization, id);
+            var d = db.StudyGroup.FirstOrDefault(sg => sg.Id == id);
+            var organization = Request["OrgId"];
+            LoadOrganization(organization, id);
             try
             {
-                LoadEmployee(Convert.ToInt32(Organization), studygroup.Id);
+                LoadEmployee(Convert.ToInt32(organization), studygroup.Id);
                 empId = Request["EmployeeId"];
                 int orgEmp = 0;
                 if (empId != null)
@@ -226,7 +230,7 @@ namespace APP.Controllers
                     orgEmp = _emp.OrganizationId;
                 }
                 int idSt = Convert.ToInt32(empId);
-                if (empId != null & Convert.ToInt32(Organization) == orgEmp)
+                if (empId != null & Convert.ToInt32(organization) == orgEmp)
                 {
 
                     Employee emp = (from e in db.Employee
