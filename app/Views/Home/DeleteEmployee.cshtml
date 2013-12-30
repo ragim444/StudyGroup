@@ -14,15 +14,15 @@
 <body>
     <h3>Вы действительно хотите удалить этого сотрудника?</h3>
    
-        <legend><b>Сотрудник</b></legend>
+        <h4><b>Сотрудник</b></h4>
     
-        <div class="display-label">
+
         ФИО:  @Html.DisplayFor(model => model.FIO)
-        </div>
+    <br />
        
-        <div class="display-label">
-             Организация:    @Html.DisplayFor(model => model.Organization.Title)
-        </div>
+
+    Организация:    @Html.DisplayFor(model => model.Organization.Title)
+
       
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
