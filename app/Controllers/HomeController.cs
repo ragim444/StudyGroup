@@ -84,6 +84,7 @@ namespace APP.Controllers
             return View();
         }
 
+        //Создаем группу
         [HttpPost]
         public ActionResult CreateGroup(StudyGroup studygroup, int list = 0)
         {
