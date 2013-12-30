@@ -42,14 +42,7 @@ namespace APP.Controllers
             var tch = db.Teacher.ToList();
             return View(tch);
         }
-        //
-        // GET: /Home/Details/5
-
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
+       
         public ActionResult DeleteEmployee(int id)
         {
             var d = db.Employee.Where(item => item.Id == id).FirstOrDefault();
@@ -252,7 +245,7 @@ namespace APP.Controllers
 
                 }
             }
-            catch (Exception e)
+            catch
             {
 
             }
@@ -282,16 +275,12 @@ namespace APP.Controllers
         //Немного отрефакторил костыль, что был в прошлой версии, через использование Except
         public IQueryable<Employee> EmployeeNotInGroup(int idGr)
         {
-            List<Employee> students = new List<Employee>();
             var d = db.StudyGroup
             .Include("Employee")
             .Where(b => b.Id == idGr).ToList()
             .FirstOrDefault();
 
-            foreach (var item in d.Employee)
-            {
-                students.Add(item);
-            }
+            var students = d.Employee.ToList();
             var employee = db.Employee.ToList();
 
             var notSt = employee.AsQueryable().Except(students);
